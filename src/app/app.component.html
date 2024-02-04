@@ -1,0 +1,31 @@
+<nz-layout>
+  <nz-header>
+    <div class="logo"></div>
+    <ul nz-menu nzTheme="dark" nzMode="horizontal">
+      <div *ngIf="role === 'admin'" style="display: flex;flex-direction:row">
+      <li nz-menu-item>
+       <a routerLink="admin/adminPage">Teacher</a> </li>
+      <li nz-menu-item>
+       <a routerLink="admin/studentList"> Student</a></li>
+      </div>
+      <div *ngIf="role === 'teacher'" style="display: flex;flex-direction:row">
+        <li nz-menu-item>
+         <a routerLink="teacher/teacherPage">Coding</a> </li>
+        <li nz-menu-item>
+         <a routerLink="teacher/createQuiz">Quiz</a> </li>
+        </div>
+        <div *ngIf="role === 'student'" style="display: flex;flex-direction:row">
+          <li nz-menu-item>
+           <a routerLink="student/studentPage">Coding</a> </li>
+          <li nz-menu-item>
+           <a routerLink="student/quiz">Quiz</a> </li>
+          </div>
+    </ul>
+  </nz-header>
+  <nz-content>
+    
+    <div class="inner-content">
+      <router-outlet></router-outlet>
+    </div>
+  </nz-content>
+</nz-layout>

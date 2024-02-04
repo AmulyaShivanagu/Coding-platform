@@ -1,0 +1,31 @@
+<h1>Quiz</h1>
+<div *ngFor="let data of quizList">
+    <nz-card>
+        <h3><a>{{data.name}}</a> </h3>
+        <button (click)="showQuiz(data)">View</button>
+    </nz-card>
+</div>
+
+<nz-modal
+      [(nzVisible)]="show"
+      [nzTitle]="modalTitle"
+      [nzContent]="modalContent"
+      [nzFooter]="modalFooter"
+      (nzOnCancel)="handleCancel()"
+    >
+      <ng-template #modalTitle>{{quiz.name}}</ng-template>
+
+      <ng-template #modalContent>
+        <form [formGroup]="quizForm">
+        <div *ngFor="let question of quiz.questions">
+            <h4>{{ question.question }}</h4>
+            <input type="text" [formControlName]="question.slno">
+          </div>
+        </form>
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+        <button nz-button nzType="primary" (click)="handleOk()">Submit</button>
+      </ng-template>
+    </nz-modal>

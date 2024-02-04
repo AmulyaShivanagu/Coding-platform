@@ -1,0 +1,27 @@
+<div class="container">
+    <div style="width: 50%;">
+        <h1>{{contestData?.name}}</h1>
+        <h3>{{contestData?.question}}</h3>
+        <h2>Sample Input</h2>
+        <h3>{{contestData?.input}}</h3>
+        <h2>Sample Output</h2>
+        <h3>{{contestData?.output}}</h3>
+    </div>
+    <div style="width:50%;height:450px;overflow: scroll;">
+        <form [formGroup]="codeForm">
+        <nz-card >
+            <textarea cols="80" rows="15"class="ide" formControlName="code" placeholder="Enter your code here"></textarea>
+            <button nz-button (click)="compile()">Run</button>
+            <button nz-button nzType="primary" (click)="runtestCase()">Submit</button>
+        </nz-card>
+        <nz-card >
+                <textarea cols="80" rows="5" formControlName="input" style="height: 100px;background-color:rgb(169, 150, 245)" placeholder="Enter input"></textarea>
+        </nz-card>
+        <nz-card >
+            <div style="height: 100px;background-color:rgb(169, 150, 245)">
+                {{result}}
+            </div>
+        </nz-card>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,128 @@
+<button nz-button nzType="primary" style="margin-bottom: 25px;" (click)="createQuiz()">Create contest</button>
+
+<div *ngFor="let data of quizList">
+    <nz-card style="width:70%;">
+        <button nz-button nzType="primary" style="float: right;margin-left: 10px;" (click)="openQuiz(data)">View Contest</button>
+        <button nz-button nzType="primary" style="float: right;margin-left: 10px;" (click)="showFormModal(data._id)">Add Question</button>
+        <h3>{{data.name}}</h3>
+    </nz-card>
+</div>
+
+<nz-modal
+      [(nzVisible)]="showModal"
+      [nzTitle]="modalTitle"
+      [nzContent]="modalContent"
+      [nzFooter]="modalFooter"
+      (nzOnCancel)="handleCancel()"
+    >
+      <ng-template #modalTitle>Create Quiz</ng-template>
+      <ng-template #modalContent>
+        <form nz-form [formGroup]="quizForm">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="6" nzFor="name">Quiz name</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input nz-input name="name" type="name" id="name" formControlName="name" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="year">Year</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <input nz-input name="year" type="year" id="year" formControlName="year" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="branch">Branch</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <input nz-input name="branch" type="branch" id="branch" formControlName="branch" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="section">Section</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <input nz-input name="section" type="section" id="section" formControlName="section" />
+                </nz-form-control>
+              </nz-form-item>
+        </form>
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+        <button nz-button nzType="primary" (click)="addQuiz()">Create Quiz</button>
+      </ng-template>
+    </nz-modal>
+
+
+    <nz-modal
+      [(nzVisible)]="showForm"
+      [nzTitle]="questionTitle"
+      [nzContent]="questionContent"
+      [nzFooter]="questionFooter"
+      (nzOnCancel)="handleCancel()"
+    >
+      <ng-template #questionTitle>Create Quiz</ng-template>
+      <ng-template #questionContent>
+        <form nz-form [formGroup]="questionForm">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="6" nzFor="name">Question</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input nz-input name="name" type="name" id="name" formControlName="question" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzFor="answer">Answer</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <input nz-input name="answer" type="answer" id="answer" formControlName="answer" />
+                </nz-form-control>
+              </nz-form-item>
+        </form>
+      </ng-template>
+
+      <ng-template #questionFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+        <button nz-button nzType="primary" (click)="addQuest()">Add</button>
+      </ng-template>
+    </nz-modal>
+
+    <nz-modal
+      [(nzVisible)]="open"
+      [nzTitle]="resultTitle"
+      [nzContent]="resultContent"
+      [nzFooter]="resultFooter"
+      (nzOnCancel)="handleCancel()"
+    >
+      <ng-template #resultTitle></ng-template>
+      <ng-template #resultContent>
+        <a (click)="status('question')">Questions  </a>
+        <a (click)="status('submit')">Submissions</a>
+        <div *ngIf="sts === 'question'">
+            <nz-card>
+             <div *ngFor="let d of result.questions">
+                <p>{{d.slno}}.{{d.question}}</p>
+                <p>Answer-{{d.answer}}</p>
+             </div>
+          </nz-card>
+          </div>
+          <div *ngIf="sts === 'submit'">
+            <nz-table #basicTable [nzData]="resultList">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>USN</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of basicTable.data">
+                  <td>{{data.name}}</td>
+                  <td>{{data.usn}}</td>
+                  <td>{{data.score}}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+      </ng-template>
+
+      <ng-template #resultFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+      </ng-template>
+    </nz-modal>

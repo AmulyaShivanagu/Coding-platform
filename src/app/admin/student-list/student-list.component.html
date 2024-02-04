@@ -1,0 +1,92 @@
+<button nz-button nzType="primary" (click)="showForm()" style="float: right;margin-bottom:25px">Add</button>
+
+<nz-table #basicTable [nzData]="studentsList">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Branch</th>
+        <th>USN</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.name}}</td>
+        <td>{{data.username}}</td>
+        <td>{{data.branch}}</td>
+        <td>{{data.usn}}</td>
+      </tr>
+    </tbody>
+    <ng-template #noDataTemplate>
+        <nz-empty [nzNotFoundContent]="'No Data'"></nz-empty>
+      </ng-template>
+  </nz-table>
+
+  <nz-modal
+      [(nzVisible)]="addModal"
+      [nzTitle]="modalTitle"
+      [nzContent]="modalContent"
+      [nzFooter]="modalFooter"
+      (nzOnCancel)="handleCancel()"
+    >
+      <ng-template #modalTitle>Create teacher's account</ng-template>
+
+      <ng-template #modalContent>
+        <form nz-form [formGroup]="studentForm">
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input name!">
+                  <nz-input-group >
+                    <input formControlName="name" nz-input placeholder="name" />
+                  </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input username!">
+                  <nz-input-group >
+                    <input formControlName="username" nz-input placeholder="Username" />
+                  </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input USN!">
+                  <nz-input-group >
+                    <input formControlName="usn" nz-input placeholder="USN" />
+                  </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input branch!">
+                  <nz-input-group >
+                    <input formControlName="branch" nz-input placeholder="Branch" />
+                  </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input year!">
+                  <nz-input-group >
+                    <input formControlName="year" nz-input placeholder="Year" />
+                  </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please input section!">
+                <nz-input-group >
+                  <input formControlName="section" nz-input placeholder="Section" />
+                </nz-input-group>
+              </nz-form-control>
+          </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input Password!">
+                  <nz-input-group >
+                    <input formControlName="password" nz-input type="password" placeholder="Password" />
+                  </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+        <button nz-button nzType="primary" (click)="addStudent()">Add</button>
+      </ng-template>
+    </nz-modal>

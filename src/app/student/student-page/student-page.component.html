@@ -1,0 +1,7 @@
+<h1>Coding questions</h1>
+<div *ngFor="let data of contestList">
+    <nz-card>
+        <h3 (click)="openContest(data._id)"><a>{{data.name}}</a> </h3>
+        <p>{{data.question}}</p>
+    </nz-card>
+</div>

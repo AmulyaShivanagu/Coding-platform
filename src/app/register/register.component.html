@@ -1,0 +1,55 @@
+<div class="main">
+    <div>
+        <!-- <nz-select ngModel="lucy">
+            <nz-option nzValue="admin" nzLabel="Admin"></nz-option>
+            <nz-option nzValue="teacher" nzLabel="Teacher"></nz-option>
+            <nz-option nzValue="student" nzLabel="Student" nzDisabled></nz-option>
+        </nz-select> -->
+    </div>
+    <div style="display: inline-flex;justify-content: center;">
+    
+       <nz-card style="width: 500px;margin-right: 5%;">
+         <img width="450px" src="https://t3.ftcdn.net/jpg/05/36/05/86/360_F_536058612_aPplvINOy4qH2inlMu5pqxPoW4FmP2nv.jpg" alt="">
+         <button nz-button [nzType]="'primary'" (click)="showRegisterModal()"><span>Login</span></button>
+         <nz-modal [(nzVisible)]="register" nzTitle="The first Modal" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
+            <ng-container *nzModalContent>
+                <form nz-form [formGroup]="Registerform" >
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Please input your username!">
+                        <nz-input-group nzPrefixIcon="user">
+                          <input formControlName="username" nz-input placeholder="Username" />
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Please input your Password!">
+                        <nz-input-group nzPrefixIcon="lock">
+                          <input formControlName="password" nz-input type="password" placeholder="Password" />
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Please input your Password!">
+                          <nz-select formControlName="role" nzPlaceHolder="Select role">
+                            <nz-option nzLabel="Admin" nzValue="admin"></nz-option>
+                            <nz-option nzLabel="Teacher" nzValue="teacher"></nz-option>
+                            <nz-option nzLabel="Student" nzValue="student"></nz-option>
+                          </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                      <nz-form-control>
+                        <button nz-button nzType="primary" (click)="onSubmit()">Log in</button>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </form>
+            </ng-container>
+            <ng-template #modalFooter></ng-template>
+         </nz-modal>
+       </nz-card>
+
+     
+    </div>
+
+</div>

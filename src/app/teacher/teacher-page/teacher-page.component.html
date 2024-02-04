@@ -1,0 +1,201 @@
+<button nz-button nzType="primary" style="margin-bottom: 25px;" (click)="createContest()">Create contest</button>
+
+<div style="justify-content:center">
+<div *ngFor="let data of contestList" >
+    <nz-card style="width:70%;">
+        <button nz-button nzType="primary" style="float: right;" (click)="openContest(data._id,data.name,data.results,data)">View Contest</button>
+        <h3>{{data.name}}</h3>
+        <p>{{data.question}}</p>
+    </nz-card>
+</div>
+</div>
+
+<nz-modal
+[(nzVisible)]="showContestModal"
+[nzTitle]="modalTitle"
+[nzContent]="modalContent"
+[nzFooter]="modalFooter"
+(nzOnCancel)="handleCancel()"
+>
+<ng-template #modalTitle>Custom Modal Title</ng-template>
+
+<ng-template #modalContent>
+   
+      <div >
+    <form  nz-form [formGroup]="codingForm">
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please input name of the question!">
+              <nz-input-group >
+                <input formControlName="name" nz-input placeholder="name" />
+              </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please enter question!">
+              <nz-input-group >
+                <input formControlName="question" nz-input placeholder="question" />
+              </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please enter sample input ">
+              <nz-input-group >
+                <textarea cols="60" rows="3" formControlName="input" nz-input placeholder="sample input"></textarea>
+              </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please enter sample output ">
+              <nz-input-group >
+                <textarea name="" id="" cols="60" rows="3" formControlName="output" nz-input placeholder="sample output"></textarea>
+              </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please enter 1st test case">
+              <nz-input-group >
+                <textarea name="" id="" cols="60" rows="3" formControlName="testCase1" nz-input placeholder="Test Case 1"></textarea>
+              </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please enter 2nd test case">
+              <nz-input-group >
+                <textarea name="" id="" cols="60" rows="3" formControlName="tc1ans" nz-input placeholder="Test Case 1 answer"></textarea>
+              </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please enter answer of 1st test case">
+              <nz-input-group >
+                <textarea name="" id="" cols="60" rows="3" formControlName="testCase2" nz-input placeholder="Test Case 2"></textarea>
+              </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please enter answer of 2nd test case">
+              <nz-input-group >
+                <textarea name="" id="" cols="60" rows="3" formControlName="tc2ans" nz-input placeholder="Test Case 2 answer"></textarea>
+              </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <p>Assign students for this contest</p>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please enter branch!">
+            <nz-input-group >
+              <input formControlName="branch" nz-input placeholder="branch" />
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please enter year!">
+              <nz-input-group >
+                <input formControlName="year" nz-input placeholder="year" />
+              </nz-input-group>
+            </nz-form-control>
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please enter section!">
+                <nz-input-group >
+                  <input formControlName="section" nz-input placeholder="section" />
+                </nz-input-group>
+              </nz-form-control>
+          </nz-form-item>
+        </nz-form-item>
+      </nz-form-item>
+    </form>
+    </div>
+    <div *ngIf="contestType === 'quiz'" >
+    <form nz-form [formGroup]="quizForm">
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please enter the question!">
+              <nz-input-group >
+                <input formControlName="question" nz-input placeholder="Question" />
+              </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please enter the answer!">
+              <nz-input-group >
+                <input formControlName="answer" nz-input placeholder="Answer" />
+              </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+    </div>
+</ng-template>
+
+<ng-template #modalFooter>
+  <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+  <button nz-button nzType="primary" (click)="addContest()">Create Contest</button>
+</ng-template>
+</nz-modal>
+
+<nz-modal
+      [(nzVisible)]="open"
+      [nzTitle]="contestTitle"
+      [nzContent]="contestContent"
+      [nzFooter]="contestFooter"
+      (nzOnCancel)="handleCancel()"
+    >
+      <ng-template #contestTitle>{{contestName}}</ng-template>
+
+      <ng-template #contestContent >
+        <button (click)="showDetails('question')">Question</button>
+          <button (click)="showDetails('submit')">Submissions</button>
+        <div>
+        <div *ngIf="show === 'question'">
+          <nz-card>
+          <p>{{contestData.question}}</p>
+          <p><b> Sample Input </b></p>
+          <p>{{contestData.input}}</p>
+          <p><b> Sample Output </b></p>
+          <p>{{contestData.output}}</p>
+        </nz-card>
+        </div>
+        <div *ngIf="show === 'submit'">
+          <nz-table #basicTable [nzData]="resultList">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>USN</th>
+                <th>Branch</th>
+                <th>Year</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of basicTable.data">
+                <td><a (click)="showResult(data)">{{data.student}}</a></td>
+                <td>{{data.usn}}</td>
+                <td>{{data.branch}}</td>
+                <td>{{data.year}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+      </ng-template>
+
+      <ng-template #contestFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">Close</button>
+      </ng-template>
+    </nz-modal>
+
+    <nz-modal
+      [(nzVisible)]="display"
+      [nzTitle]="resultTitle"
+      [nzContent]="resultContent"
+      [nzFooter]="resultFooter"
+      (nzOnCancel)="cancel()"
+    >
+      <ng-template #resultTitle>Custom Modal Title</ng-template>
+
+      <ng-template #resultContent>
+        <p><b>Answer</b></p>
+        {{resultObj.answer}}
+        <p><b>Result</b></p>
+        {{resultObj.result}}
+      </ng-template>
+
+      <ng-template #resultFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+      </ng-template>
+    </nz-modal>
